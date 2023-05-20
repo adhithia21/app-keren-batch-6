@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -27,3 +27,9 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build Image and Push
+      uses: docker/build-push-action@v4
+      with:
+        push: true
+        tags: adhithia21/app-keren:${{ github.run_number }}
