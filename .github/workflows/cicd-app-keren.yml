@@ -33,3 +33,18 @@ jobs:
       with:
         push: true
         tags: adhithia21/app-keren:${{ github.run_number }}
+
+  deploy-container:
+    runs-on: ubuntu-latest
+    steps:
+    - name: provission server via ssh
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        hosts: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        key: ${{ secrets.SERVER_KEY }}
+        script: |
+          docker pull adhithia21/app-keren:${{ github.run_number }}
+          docker stop app-keren
+          docker rm -f app-keren
+          docker run --name app-keren -d -p 80:8000 adhithia21/app-keren:${{ github.run_number }}
