@@ -46,6 +46,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_KEY }}
         script: |
+          docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password=${{ secrets.DOCKERHUB_TOKEN }}
           docker pull adhithia21/app-keren:${{ github.run_number }}
           docker stop app-keren
           docker rm -f app-keren
